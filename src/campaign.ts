@@ -2,28 +2,55 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { Object, Property } from 'fabric-contract-api';
+import { Object as ContractObject, Property } from 'fabric-contract-api';
 
-@Object()
+/**
+ * Campaign Asset
+ * Represents a fundraising campaign stored on the ledger
+ */
+@ContractObject()
 export class Campaign {
 
+    /**
+     * Unique campaign reference ID (auto-generated)
+     */
     @Property()
-    // required value that patience owes
-    public requestAmount: number;
+    public campaignRef: number = 0;
 
-    // patience invoice from hospital meant to authenticate from Hos server aka Resource Server 
-    public patienceInv: string;
+    /**
+     * Name of the requestor (patient or organizer)
+     */
+    @Property()
+    public requestor: string = '';
 
-    // patience story or plea statement
-    public campaignStory: string;
+    /**
+     * Requested amount to be raised
+     */
+    @Property()
+    public requestAmount: number = 0;
 
-    // for auto creation of campaign ID, to be written to campaignId
-    public campaignRef: number
+    /**
+     * Patient invoice from hospital (authentication proof)
+     */
+    @Property()
+    public patientInvoice: string = '';
 
-    // Requestor name as registered 
-    public Requestor: string;
+    /**
+     * Story or plea statement for the campaign
+     */
+    @Property()
+    public campaignStory: string = '';
 
-    // progressive donation receives from public donors
-    public donateAddUp: number;
+    /**
+     * Total donations received so far
+     */
+    @Property()
+    public donatedAmount: number = 0;
 
+    /**
+     * Constructor (optional initialization)
+     */
+    constructor(init?: Partial<Campaign>) {
+        Object.assign(this, init);
+    }
 }
